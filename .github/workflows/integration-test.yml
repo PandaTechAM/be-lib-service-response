@@ -1,61 +1,33 @@
-steps:
-  - name: Checkout code
-    uses: actions/checkout@v2
+name: .NET Test
 
-  - name: Setup .NET
-    uses: actions/setup-dotnet@v1
-    with:
-      dotnet-version: '7.x.x'
+on: [push]
 
-  - name: Restore dependencies
-    run: |
-      cd ./ServiceResponse
-      dotnet restore
-    working-directory: ./ServiceResponse
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  - name: Build and test
-    run: dotnet test --configuration Release --logger trx
-    working-directory: ./ServiceResponse
+    steps:
+    - uses: actions/checkout@v2
 
-  - name: Upload test results
-    uses: actions/upload-artifact@v2
-    with:
-      name: test-results
-      path: ./ServiceResponse/TestResults/*.trx
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.x.x'
 
-  - name: Generate coverage report
-    run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    working-directory: ./ServiceResponse
+    - name: Restore dependencies
+      run: |
+        cd ./ServiceResponse
+        dotnet restore
+      working-directory: ./ServiceResponse
 
-  - name: Upload coverage report
-    uses: actions/upload-artifact@v2
-    with:
-      name: coverage-report
-      path: ./ServiceResponse/coverage.opencover.xml
+    - name: Build and test
+      run: dotnet test --configuration Release --logger trx
+      working-directory: ./ServiceResponse
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v2
-    with:
-      node-version: '16'
-
-  - name: Install dependencies
-    run: npm install
-
-  - name: Generate coverage badge
-    run: npm run coverage:badge
-    env:
-      COVERAGE_FILE_PATH: './ServiceResponse/coverage.opencover.xml'
-    working-directory: ./ServiceResponse
-
-  - name: Upload coverage badge
-    uses: actions/upload-artifact@v2
-    with:
-      name: coverage-badge
-      path: ./ServiceResponse/coverage-badge.svg
-
-  - name: Comment on pull request
-    uses: unsplash/comment-on-pr@v1
-    with:
-      message: |
-        ## Code Coverage Report
-        ![Coverage](./ServiceResponse/coverage-badge.svg)
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: |
+          ./ServiceResponse/TestResults/*.trx
+          
