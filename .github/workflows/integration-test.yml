@@ -16,6 +16,7 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: ServiceResponse/ServiceResponse.sln
 
     - name: Build and test
       run: dotnet test --configuration Release --logger trx
