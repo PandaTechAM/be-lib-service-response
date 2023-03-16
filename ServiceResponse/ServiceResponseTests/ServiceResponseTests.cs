@@ -11,25 +11,58 @@ public class ServiceResponseTests
     {
         // Arrange
         var serviceResponse = new ServiceResponse();
-        ServiceResponse<object> ServiceResponseTyped = new ServiceResponse<object>();
+        var serviceResponseTyped = new ServiceResponse<object>();
+        var serviceResponsePaged = new ServiceResponsePaged<object>(null, 1, 20, 0);
+        
+        
         // Act
 
         // Assert
+
+        Assert.Multiple(
+            () =>
+            {
+                Assert.That(serviceResponsePaged.Success, Is.True);
+                Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
+                Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
+                Assert.That(serviceResponsePaged.Data, Is.Null);
+                Assert.That(serviceResponsePaged.Page, Is.EqualTo(1));
+                Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(20));
+                Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(0));
+            }
+        );
+
         Assert.Multiple(() =>
         {
             Assert.That(serviceResponse.Success, Is.True);
             Assert.That(serviceResponse.Message, Is.EqualTo(string.Empty));
             Assert.That(serviceResponse.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
         });
-        
-        
+
+
         Assert.Multiple(() =>
         {
-            Assert.That(ServiceResponseTyped.Success, Is.True);
-            Assert.That(ServiceResponseTyped.Message, Is.EqualTo(string.Empty));
-            Assert.That(ServiceResponseTyped.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-            Assert.That(ServiceResponseTyped.Data, Is.Null);
+            Assert.That(serviceResponseTyped.Success, Is.True);
+            Assert.That(serviceResponseTyped.Message, Is.EqualTo(string.Empty));
+            Assert.That(serviceResponseTyped.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
+            Assert.That(serviceResponseTyped.Data, Is.Null);
         });
+
+
+        serviceResponsePaged = new ServiceResponsePaged<object>();
+        
+        Assert.Multiple(
+            () =>
+            {
+                Assert.That(serviceResponsePaged.Success, Is.True);
+                Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
+                Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
+                Assert.That(serviceResponsePaged.Data, Is.Null);
+                Assert.That(serviceResponsePaged.Page, Is.EqualTo(1));
+                Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(20));
+                Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(0));
+            }
+        );
     }
 
     [Test]
@@ -113,7 +146,7 @@ public class ServiceResponseTests
 
         // Act
         controller.ExceptionHandler.Handle(response, exception);
-        
+
         // Assert
         Assert.Multiple(() =>
         {
@@ -122,7 +155,7 @@ public class ServiceResponseTests
             Assert.That(response.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Error));
         });
     }
-    
+
     [Test]
     public void TestExceptionHandlers()
     {
@@ -137,10 +170,10 @@ public class ServiceResponseTests
         {
             builder.AppendLine(exception.InnerException?.Message);
             builder.AppendLine(exception.InnerException?.StackTrace);
-        } 
-        
+        }
+
         handler.Handle(response, exception);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(response.Success, Is.False);
@@ -153,9 +186,9 @@ public class ServiceResponseTests
     public void TestExceptionHandlers_WithNullResponse()
     {
         var testController = new TestController();
-        
+
         var statuses = Enum.GetValues<ServiceResponseStatus>();
-        
+
         foreach (var status in statuses)
         {
             var response = testController.GetResponse(status);
@@ -167,8 +200,8 @@ public class ServiceResponseTests
             });
         }
     }
-    
-    
+
+
     private class TestController : ExtendedController
     {
         public new HttpResponse Response { get; set; } = new DefaultHttpResponse(new DefaultHttpContext());
@@ -189,6 +222,5 @@ public class ServiceResponseTests
             };
             return SetResponse(response);
         }
-
     }
 }
