@@ -134,7 +134,7 @@ public class ServiceResponseTests
         Assert.Multiple(() =>
         {
             Assert.That(response.Success, Is.False);
-            Assert.That(response.Message, Is.EqualTo("An error occurred\r\n\r\n"));
+            Assert.That(response.Message.Trim(), Is.EqualTo("An error occurred"));
             Assert.That(response.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Error));
         });
     }
