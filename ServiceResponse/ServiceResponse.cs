@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ServiceResponse;
+namespace PandaTechServiceResponse;
 
 /*
  * This is service response template for .NET 6, 7 web api projects. This template is based on the best practices and
@@ -11,10 +11,10 @@ namespace ServiceResponse;
  * 
  * This Template is designed by PandaTech LLC.
  * We build software with the greatest quality!
- * Our link: www.pandatech.it :)
+ * Our website: www.pandatech.it :)
  */
 
-//See below class for every type of service responses in standatized way:
+//See below class for every type of service responses in standardized way:
 public class ServiceResponse
 {
     public bool Success { get; set; } = true;
@@ -25,7 +25,7 @@ public class ServiceResponse
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ServiceResponseStatus
 {
-    Ok, //Post/Put request succeeded.
+    Ok, //Get/Post/Put/Delete request succeeded.
     Moved, //Requested resource assigned to new temp/perm URL
     BadRequest, //Client side error due to some reason
     Duplicate, //Duplicative data
@@ -34,6 +34,7 @@ public enum ServiceResponseStatus
     NotFound, //Endpoint is valid but the resource itself does not exist.
     Error //Other error
 }
+
 public class ServiceResponse<T> : ServiceResponse
 {
     public T? Data { get; set; }
@@ -43,8 +44,11 @@ public class ServiceResponse<T> : ServiceResponse
         Data = data;
     }
 
-    public ServiceResponse() { }
+    public ServiceResponse()
+    {
+    }
 }
+
 public class ServiceResponsePaged<T> : ServiceResponse<T>
 {
     public int Page { get; set; } = 1;
@@ -57,7 +61,10 @@ public class ServiceResponsePaged<T> : ServiceResponse<T>
         PageSize = pageSize;
         TotalCount = totalCount;
     }
-    public ServiceResponsePaged() { }
+
+    public ServiceResponsePaged()
+    {
+    }
 }
 
 public class ExtendedController : ControllerBase
