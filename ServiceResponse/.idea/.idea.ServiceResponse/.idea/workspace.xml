@@ -9,17 +9,7 @@
     <projectFile profileName="https">DemoProject/DemoProject.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ef26362-4060-4fb9-bbf7-64c43e429f41" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DemoContext/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DemoProject/Controllers/DemoController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DemoProject/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ServiceResponse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ServiceResponse/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceResponse.sln" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceResponse.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceResponse/PandaTech/Controller/ExtendedController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceResponse/PandaTech/Controller/ExtendedController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceResponse/PandaTech/ServiceResponse/ServiceResponseStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceResponse/PandaTech/ServiceResponse/ServiceResponseStatus.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceResponseTests/ServiceResponseTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceResponseTests/ServiceResponseTests.cs" afterDir="false" />
-    </list>
+    <list default="true" id="0ef26362-4060-4fb9-bbf7-64c43e429f41" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +62,7 @@
     ]
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.DemoContext: https">
+  <component name="RunManager" selected="7ecdefd6-fa6d-4a37-b116-e50d5cc232f0">
     <configuration name="DemoContext: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/DemoContext/DemoContext.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net7.0" />
@@ -173,7 +163,7 @@
       <option name="presentableId" value="Default" />
       <updated>1678950605863</updated>
       <workItem from="1678950607257" duration="174000" />
-      <workItem from="1678950788832" duration="12194000" />
+      <workItem from="1678950788832" duration="13053000" />
     </task>
     <servers />
   </component>
@@ -181,10 +171,10 @@
     <option name="version" value="3" />
   </component>
   <component name="UnitTestsCoverage.Settings">
-    <option name="coveragePercentColumnWidth" value="97" />
+    <option name="coveragePercentColumnWidth" value="85" />
     <option name="sortOrder" value="DESCENDING" />
     <option name="sortedColumn" value="1" />
-    <option name="symbolColumnWidth" value="104" />
+    <option name="symbolColumnWidth" value="92" />
     <coverage-tree-state>
       <expand>
         <path>

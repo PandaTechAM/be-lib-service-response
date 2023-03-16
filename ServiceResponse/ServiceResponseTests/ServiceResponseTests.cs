@@ -1,4 +1,5 @@
 using System.Security.Permissions;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -128,14 +129,22 @@ public class ServiceResponseTests
         var handler = new DebugExceptionHandler();
         var response = new ServiceResponse();
         var exception = new Exception("An error occurred", new Exception("Inner exception"));
-        
+
+        var builder = new StringBuilder();
+        builder.AppendLine(exception.Message);
+        builder.AppendLine(exception.StackTrace);
+        if (exception.InnerException != null)
+        {
+            builder.AppendLine(exception.InnerException?.Message);
+            builder.AppendLine(exception.InnerException?.StackTrace);
+        } 
         
         handler.Handle(response, exception);
         
         Assert.Multiple(() =>
         {
             Assert.That(response.Success, Is.False);
-            Assert.That(response.Message.Trim(), Is.EqualTo("An error occurred\r\n\r\nInner exception"));
+            Assert.That(response.Message.Trim(), Is.EqualTo(builder.ToString().Trim()));
             Assert.That(response.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Error));
         });
     }
@@ -145,9 +154,7 @@ public class ServiceResponseTests
     {
         var testController = new TestController();
         
-        var statuses = ServiceResponseStatus.GetValues<ServiceResponseStatus>();
-        
-        
+        var statuses = Enum.GetValues<ServiceResponseStatus>();
         
         foreach (var status in statuses)
         {
