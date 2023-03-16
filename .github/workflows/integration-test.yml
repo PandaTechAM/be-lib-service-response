@@ -1,13 +1,15 @@
-name: .NET Test
+name: .NET Test and Code Coverage
 
-on: [push]
+on:
+  push:
+    branches: [main]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
@@ -30,7 +32,7 @@ jobs:
         name: test-results
         path: |
           ./ServiceResponse/TestResults/*.trx
-          
+
     - name: Generate coverage report
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
       working-directory: ./ServiceResponse
@@ -40,3 +42,53 @@ jobs:
       with:
         name: coverage-report
         path: ./ServiceResponse/coverage.opencover.xml
+
+  codecov:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install codecov
+      run: |
+        curl -s https://codecov.io/bash > codecov
+        chmod +x codecov
+        sudo mv codecov /usr/local/bin/codecov
+
+    - name: Download coverage report
+      uses: actions/download-artifact@v2
+      with:
+        name: coverage-report
+        path: .
+
+    - name: Upload coverage to Codecov
+      run: codecov -f "coverage.opencover.xml" -t $CODECOV_TOKEN
+
+  update-badge:
+    runs-on: ubuntu-latest
+    needs: codecov
+    steps:
+    - name: Install shields-badge-generator
+      run: npm install -g shields-badge-generator
+
+    - name: Download coverage report
+      uses: actions/download-artifact@v2
+      with:
+        name: coverage-report
+        path: .
+
+    - name: Generate badge
+      run: sbg coverage -c $(bash <(curl -s https://codecov.io/env) | grep -oP 'CODECOV_*.*\w') -f "coverage.opencover.xml" -o ./badge.svg
+
+    - name: Create commit and push changes
+      uses: EndBug/add-and-commit@v7
+      with:
+        author_name: Your Name
+        author_email: your.email@example.com
+        message: "chore: update coverage badge"
+        add: .
+        force: true
+        push: true
