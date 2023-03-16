@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0ef26362-4060-4fb9-bbf7-64c43e429f41" name="Changes" comment="" />
+    <list default="true" id="0ef26362-4060-4fb9-bbf7-64c43e429f41" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ServiceResponse/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ServiceResponse/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceResponseTests/ServiceResponseTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceResponseTests/ServiceResponseTests.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1678950605863</updated>
       <workItem from="1678950607257" duration="174000" />
-      <workItem from="1678950788832" duration="3829000" />
+      <workItem from="1678950788832" duration="5581000" />
     </task>
     <servers />
   </component>
@@ -61,43 +64,43 @@
       <expand>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="PandaTech.ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="PandaTech.ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 100% 0/9" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="PandaTech.ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse&lt;T&gt; 100% 0/9" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="PandaTech.ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponsePaged&lt;T&gt; 74% 5/19" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
         </path>
         <path>
           <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
-          <item name="Total 73% 42/156" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+          <item name="Total 70% 48/162" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="PandaTech.ServiceResponse 56% 34/77" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
           <item name="ExtendedController 55% 9/20" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />

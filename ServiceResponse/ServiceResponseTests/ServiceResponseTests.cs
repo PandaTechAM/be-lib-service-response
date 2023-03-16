@@ -1,3 +1,4 @@
+using System.Security.Permissions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
@@ -112,12 +113,28 @@ public class ServiceResponseTests
         // Act
         controller.ExceptionHandler.Handle(response, exception);
         
-        
         // Assert
         Assert.Multiple(() =>
         {
             Assert.That(response.Success, Is.False);
-            Assert.That(response.Message, Is.EqualTo("An error occurred"));
+            Assert.That(response.Message, Is.EqualTo("An error occurred, please contact support."));
+            Assert.That(response.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Error));
+        });
+    }
+    
+    [Test]
+    public void TestExceptionHandlers()
+    {
+        var handler = new DebugExceptionHandler();
+        var response = new ServiceResponse();
+        var exception = new Exception("An error occurred");
+
+        handler.Handle(response, exception);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Success, Is.False);
+            Assert.That(response.Message, Is.EqualTo("An error occurred\r\n\r\n"));
             Assert.That(response.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Error));
         });
     }
@@ -126,7 +143,7 @@ public class ServiceResponseTests
     {
         public new HttpResponse Response { get; set; } = new DefaultHttpResponse(new DefaultHttpContext());
 
-        public TestController() : base(new DebugExceptionHandler())
+        public TestController() : base(new PublicExceptionHandler())
         {
             ControllerContext = new ControllerContext
             {
