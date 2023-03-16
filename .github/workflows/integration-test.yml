@@ -19,7 +19,7 @@ jobs:
 
     - name: Build and test
       run: dotnet test --configuration Release --logger trx
-      working-directory: ./ServiceResponse
+      working-directory: ./ServiceResponse/ServiceResponse/ServiceResponseTests/ServiceResponseTests.csproj
 
     - name: Upload test results
       uses: actions/upload-artifact@v2
