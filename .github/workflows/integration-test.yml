@@ -15,12 +15,14 @@ jobs:
         dotnet-version: '7.x.x'
 
     - name: Restore dependencies
-      run: dotnet restore
-      working-directory: ServiceResponse/ServiceResponse.sln
+      run: |
+        cd ./ServiceResponse
+        dotnet restore
+      working-directory: ./ServiceResponse
 
     - name: Build and test
       run: dotnet test --configuration Release --logger trx
-      working-directory: ServiceResponse/ServiceResponse.sln
+      working-directory: ./ServiceResponse
 
     - name: Upload test results
       uses: actions/upload-artifact@v2
@@ -28,4 +30,3 @@ jobs:
         name: test-results
         path: |
           ./ServiceResponse/TestResults/*.trx
-
