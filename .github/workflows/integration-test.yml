@@ -1,12 +1,13 @@
-name: .NET Test and Code Coverage
+name: .NET Test and Coverage
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -43,52 +44,53 @@ jobs:
         name: coverage-report
         path: ./ServiceResponse/coverage.opencover.xml
 
-  codecov:
-    runs-on: ubuntu-latest
-    needs: build-and-test
-    env:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Set author email
+      run: |
+        echo "USER_EMAIL=${{ github.event.head_commit.author.email }}" >> $GITHUB_ENV
 
-    - name: Install codecov
+    - name: Install Codecov
       run: |
         curl -s https://codecov.io/bash > codecov
         chmod +x codecov
-        sudo mv codecov /usr/local/bin/codecov
-
-    - name: Download coverage report
-      uses: actions/download-artifact@v2
-      with:
-        name: coverage-report
-        path: .
 
     - name: Upload coverage to Codecov
-      run: codecov -f "coverage.opencover.xml" -t $CODECOV_TOKEN
+      run: |
+        ./codecov -t ${{ secrets.CODECOV_TOKEN }} -f "./ServiceResponse/coverage.opencover.xml" -X gcov
 
-  update-badge:
-    runs-on: ubuntu-latest
-    needs: codecov
-    steps:
-    - name: Install shields-badge-generator
-      run: npm install -g shields-badge-generator
+    - name: Generate coverage badge
+      run: |
+        COVERAGE=$(curl -s https://codecov.io/api/gh/${{ github.repository }} | jq -r '.commit.totals.c')
+        COLOR="brightgreen"
+        if (( $(echo "$COVERAGE < 80" | bc -l) )); then COLOR="yellow"; fi
+        if (( $(echo "$COVERAGE < 60" | bc -l) )); then COLOR="orange"; fi
+        if (( $(echo "$COVERAGE < 40" | bc -l) )); then COLOR="red"; fi
+        echo "![codecov](https://img.shields.io/badge/coverage-$COVERAGE%25-$COLOR)" > badge.md
+        echo "::set-output name=badge::$(cat badge.md)"
 
-    - name: Download coverage report
-      uses: actions/download-artifact@v2
-      with:
-        name: coverage-report
-        path: .
-
-    - name: Generate badge
-      run: sbg coverage -c $(bash <(curl -s https://codecov.io/env) | grep -oP 'CODECOV_*.*\w') -f "coverage.opencover.xml" -o ./badge.svg
-
-    - name: Create commit and push changes
+    - name: Commit and push badge
       uses: EndBug/add-and-commit@v7
       with:
-        author_name: Your Name
-        author_email: your.email@example.com
+        author_name: "Your Name"
+        author_email: ${{ env.USER_EMAIL }}
         message: "chore: update coverage badge"
         add: .
         force: true
         push: true
+
+    - name: Get badge URL
+      id: get_badge
+      run: |
+        echo "::set-output name=badge_url::$(cat badge.md)"
+
+    - name: Comment on pull request
+      uses: actions/github-script@v4
+      if: github.event_name == 'pull_request'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const { data: pullRequest } = await github.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          const commentBody =
