@@ -30,3 +30,13 @@ jobs:
         name: test-results
         path: |
           ./ServiceResponse/TestResults/*.trx
+          
+    - name: Generate coverage report
+      run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      working-directory: ./ServiceResponse
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage-report
+        path: ./ServiceResponse/coverage.opencover.xml
