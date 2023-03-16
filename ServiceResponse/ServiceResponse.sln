@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceResponse", "ServiceR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceResponseTests", "ServiceResponseTests\ServiceResponseTests.csproj", "{72572576-3202-4DF8-8705-0E15C8FDC34F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoContext", "DemoContext\DemoContext.csproj", "{A9B79279-DB0E-48F8-A5FE-53D11A71BE8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{72572576-3202-4DF8-8705-0E15C8FDC34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72572576-3202-4DF8-8705-0E15C8FDC34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72572576-3202-4DF8-8705-0E15C8FDC34F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B79279-DB0E-48F8-A5FE-53D11A71BE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B79279-DB0E-48F8-A5FE-53D11A71BE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B79279-DB0E-48F8-A5FE-53D11A71BE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B79279-DB0E-48F8-A5FE-53D11A71BE8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

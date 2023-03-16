@@ -8,24 +8,12 @@ public abstract class ExtendedController : ControllerBase
 
     protected ExtendedController(IExceptionHandler exceptionHandler)
     {
-        this.ExceptionHandler = exceptionHandler;
+        ExceptionHandler = exceptionHandler;
     }
     
     public T SetResponse<T>(T response) where T : ServiceResponse
     {
-        Response.StatusCode = response.ResponseStatus switch
-        {
-            ServiceResponseStatus.Ok => 200,
-            ServiceResponseStatus.OkWithNoData => 204,
-            ServiceResponseStatus.Moved => 302,
-            ServiceResponseStatus.BadRequest => 400,
-            ServiceResponseStatus.Duplicate => 400,
-            ServiceResponseStatus.Unauthorized => 401,
-            ServiceResponseStatus.Forbidden => 403,
-            ServiceResponseStatus.NotFound => 404,
-            ServiceResponseStatus.Error => 500,
-            _ => 500
-        };
+        Response.StatusCode = (int)response.ResponseStatus;
         return response;
     }
 }
