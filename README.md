@@ -113,7 +113,7 @@ public class Services : IService
 ```
  ### Controller
  ```cs
- [ApiController]
+[ApiController]
 [Route("[controller]")]
 public class DemoController : ExtendedController
 {
@@ -127,46 +127,49 @@ public class DemoController : ExtendedController
     [HttpDelete("Post")]
     public ServiceResponse DeletePost(int postId)
     {
+        var serviceResponse = new ServiceResponse();
         try
         {
-            var serviceResponse = _service.DeletePost(postId);
-            return SetResponse(serviceResponse);
+            serviceResponse = _service.DeletePost(postId);
         }
         catch (Exception e)
         {
-            var serviceResponse = new ServiceResponse();
             return ExceptionHandler.Handle(serviceResponse, e);
         }
+
+        return SetResponse(serviceResponse);
     }
 
     [HttpGet("Post")]
     public ServiceResponse<Post> GetPost(int postId)
     {
+        var serviceResponse = new ServiceResponse<Post>();
         try
         {
-            var serviceResponse = _service.GetPost(postId);
-            return SetResponse(serviceResponse);
+            serviceResponse = _service.GetPost(postId);
         }
         catch (Exception e)
         {
-            var serviceResponse = new ServiceResponse<Post>();
-            return ExceptionHandler.Handle(serviceResponse, e);
+            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
         }
+
+        return SetResponse(serviceResponse);
     }
 
     [HttpGet("Blogs")]
     public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize)
     {
+        var serviceResponse = new ServiceResponsePaged<List<Blog>>();
         try
         {
-            var serviceResponse = _service.GetAllBlogs(page, pageSize);
-            return SetResponse(serviceResponse);
+            serviceResponse = _service.GetAllBlogs(page, pageSize);
         }
         catch (Exception e)
         {
-            var serviceResponse = new ServiceResponse<List<Post>>();
-            return ExceptionHandler.Handle(serviceResponse, e);
+            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
         }
+
+        return SetResponse(serviceResponse);
     }
 }
 ```
