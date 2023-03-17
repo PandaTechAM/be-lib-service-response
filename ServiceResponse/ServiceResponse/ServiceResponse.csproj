@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <PackageId>PandaTech.ServiceResponse</PackageId>
     <Title>ServiceResponse</Title>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>PandaTech</Authors>
     <Company>PandaTech</Company>
     <Product>ServiceResponseTemplate</Product>
@@ -18,15 +18,15 @@
     <PackageTags>API; RESTt; ServiceResponse; Service Response; HTTP status codes; API response; REST Response</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReleaseNotes>This is our first release just enjoy!</PackageReleaseNotes>
+    <PackageReleaseNotes>Minor bug fixes and readme update.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\OneDrive - PandaTech\Haik\Marketing\PandaTech Logo Variations\pandatech.png">
+    <None Include="..\..\pandatech.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Include="..\..\..\README.md">
+    <None Include="..\..\README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>

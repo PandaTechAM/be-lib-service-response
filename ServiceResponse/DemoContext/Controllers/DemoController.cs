@@ -5,12 +5,12 @@ namespace DemoContext.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class DemoController: ExtendedController
+public class DemoController : ExtendedController
 {
     public DemoController(IExceptionHandler exceptionHandler) : base(exceptionHandler)
     {
     }
-    
+
     [HttpGet]
     public ServiceResponse GetServiceResponse([FromQuery] ServiceResponseStatus responseStatus)
     {
@@ -21,11 +21,12 @@ public class DemoController: ExtendedController
         }
         catch (Exception e)
         {
-            response = ExceptionHandler.Handle(response, e);            
+            response = ExceptionHandler.Handle(response, e);
         }
+
         return SetResponse(response);
     }
-    
+
     [HttpGet("debug")]
     public ServiceResponsePaged<int> GetServiceResponsePaged([FromQuery] ServiceResponseStatus responseStatus)
     {
@@ -36,8 +37,9 @@ public class DemoController: ExtendedController
         }
         catch (Exception e)
         {
-            response = ExceptionHandler.Handle(response, e);            
+            response = ExceptionHandler.Handle(response, e);
         }
+
         return SetResponse(response);
     }
 }

@@ -1,7 +1,7 @@
 # ServiceResponse
 
 ## Intro
- This is service response template for .NET 6, 7 web api projects. This template is based on the best practices and
+ This is service response template for .Net 6+ web api projects. This template is based on the best practices and
  has goal to harmonize all API I/O operations. The benefit of this template over other templates is that it totally
  integrates with OpenAPI and Swagger. So, IActionResults and other services,
  response will be visible in Swagger UI and loads of other features are and is going to be included.
@@ -27,91 +27,146 @@ public class Blog
         public int PostId { get; set; }
         public string PostName { get; set; }
         public string PostDescription { get; set; }
-        public Blog Blog { get; set; }
+        public int BlogId { get; set; }
     }
 ```
+### Interface
+ ```cs
+public interface IService
+{
+    public ServiceResponse DeletePost(int postId);
+    public ServiceResponse<Post> GetPost(int postId);
+    public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize);
+}
+```
+
+### Program.cs extract
+ ```cs
+builder.Services.AddTransient<IService, Services>();
+
+#if DEBUG
+    builder.Services.AddTransient<IExceptionHandler, DebugExceptionHandler>();
+#else
+    builder.Services.AddTransient<IExceptionHandler, PublicExceptionHandler>();
+#endif
+```
+
  ### Service
  ```cs
-public class Services : Handler
+public class Services : IService
+{
+    public ServiceResponse DeletePost(int postId)
     {
-        public ServiceResponse DeletePost(int postId)
-        {
-            var serviceResponse = new ServiceResponse();
-            try
-            {
-                if (postId == 0) // just for example, cannot be in real case
-                {
-                    serviceResponse.ResponseStatus = ServiceResponseStatus.NotFound;
-                    serviceResponse.Message = $"PostId is with number {postId} not found";
-                    serviceResponse.Success = false;
-                }
-                //Delete post logic for serviceResponse
-            }
-            catch (Exception serviceException)
-            {
-                ExceptionHandler(serviceResponse, serviceException);
-            }
+        var serviceResponse = new ServiceResponse();
 
-            return serviceResponse;
+        if (postId == 0) // just for example, cannot be in real case
+        {
+            serviceResponse.ResponseStatus = ServiceResponseStatus.NotFound;
+            serviceResponse.Message = $"Post with id {postId} not found";
+            serviceResponse.Success = false;
+        }
+        else
+        {
+            serviceResponse.Message = $"Post with id {postId} deleted";
+            serviceResponse.ResponseStatus = ServiceResponseStatus.Ok;
         }
 
-        public ServiceResponse<Post> GetPost(int postId)
-        {
-            var serviceResponse = new ServiceResponse<Post>();
-            try
-            {
-                //Get post logic for serviceResponse
-            }
-            catch (Exception serviceException)
-            {
-                ExceptionHandler(serviceResponse, serviceException);
-            }
-
-            return serviceResponse;
-        }
-
-        public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pagesize)
-        {
-            var serviceResponse = new ServiceResponsePaged<List<Blog>>();
-            try
-            {
-                //get all blogs logic with pagination for serviceResponse
-            }
-            catch (Exception serviceException)
-            {
-                ExceptionHandler(serviceResponse, serviceException);
-            }
-
-            return serviceResponse;
-        }
+        return serviceResponse;
     }
+
+    public ServiceResponse<Post> GetPost(int postId)
+    {
+        var serviceResponse = new ServiceResponse<Post>();
+
+
+        serviceResponse.Data = new Post
+        {
+            PostId = postId,
+            PostName = "Your post name",
+            PostDescription = "Post Description",
+        };
+
+        return serviceResponse;
+    }
+
+    public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize)
+    {
+        var serviceResponse = new ServiceResponsePaged<List<Blog>>();
+
+        serviceResponse.Page = page;
+        serviceResponse.PageSize = pageSize;
+        serviceResponse.TotalCount = 1; // just for example
+
+        serviceResponse.Data = new List<Blog>
+        {
+            new Blog
+            {
+                BlogId = 1,
+                BlogName = "Your blog name",
+                BlogDescription = "Blog Description",
+            }
+        };
+
+        return serviceResponse;
+    }
+}
 ```
  ### Controller
  ```cs
- public class Controller : ExtendedController
+ [ApiController]
+[Route("[controller]")]
+public class DemoController : ExtendedController
+{
+    private IService _service;
+
+    public DemoController(IExceptionHandler exceptionHandler, IService service) : base(exceptionHandler)
     {
-        [HttpDelete("Post")]
-        public ServiceResponse DeletePost(int postId)
-        {
-            var serviceResponse = DeletePost(postId);
+        _service = service;
+    }
 
+    [HttpDelete("Post")]
+    public ServiceResponse DeletePost(int postId)
+    {
+        try
+        {
+            var serviceResponse = _service.DeletePost(postId);
             return SetResponse(serviceResponse);
         }
-
-        [HttpGet("Post")]
-        public ServiceResponse<Post> GetPost(int postId)
+        catch (Exception e)
         {
-            var serviceResponse = GetPost(postId);
-
-            return SetResponse(serviceResponse);
-        }
-
-        [HttpGet("Blogs")]
-        public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pagesize)
-        {
-            var serviceResponse = GetAllBlogs(page, pagesize);
-
-            return SetResponse(serviceResponse);
+            var serviceResponse = new ServiceResponse();
+            return ExceptionHandler.Handle(serviceResponse, e);
         }
     }
+
+    [HttpGet("Post")]
+    public ServiceResponse<Post> GetPost(int postId)
+    {
+        try
+        {
+            var serviceResponse = _service.GetPost(postId);
+            return SetResponse(serviceResponse);
+        }
+        catch (Exception e)
+        {
+            var serviceResponse = new ServiceResponse<Post>();
+            return ExceptionHandler.Handle(serviceResponse, e);
+        }
+    }
+
+    [HttpGet("Blogs")]
+    public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize)
+    {
+        try
+        {
+            var serviceResponse = _service.GetAllBlogs(page, pageSize);
+            return SetResponse(serviceResponse);
+        }
+        catch (Exception e)
+        {
+            var serviceResponse = new ServiceResponse<List<Post>>();
+            return ExceptionHandler.Handle(serviceResponse, e);
+        }
+    }
+}
 ```

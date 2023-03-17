@@ -9,6 +9,4 @@ public class PublicExceptionHandler : IExceptionHandler
         serviceResponse.ResponseStatus = ServiceResponseStatus.Error;
         return serviceResponse;
     }
-
-
 }

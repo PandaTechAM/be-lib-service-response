@@ -13,8 +13,8 @@ public class ServiceResponseTests
         var serviceResponse = new ServiceResponse();
         var serviceResponseTyped = new ServiceResponse<object>();
         var serviceResponsePaged = new ServiceResponsePaged<object>(null, 1, 20, 0);
-        
-        
+
+
         // Act
 
         // Assert
@@ -50,7 +50,7 @@ public class ServiceResponseTests
 
 
         serviceResponsePaged = new ServiceResponsePaged<object>();
-        
+
         Assert.Multiple(
             () =>
             {

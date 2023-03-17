@@ -12,7 +12,7 @@
  */
 
 //See below class for every type of service responses in standardized way:
-public class ServiceResponse: IServiceResponse
+public class ServiceResponse : IServiceResponse
 {
     public bool Success { get; set; } = true;
     public string Message { get; set; } = string.Empty;
