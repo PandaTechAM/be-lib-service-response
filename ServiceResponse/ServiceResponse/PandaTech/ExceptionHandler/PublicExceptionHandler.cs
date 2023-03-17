@@ -2,11 +2,13 @@ namespace PandaTech.ServiceResponse;
 
 public class PublicExceptionHandler : IExceptionHandler
 {
-    public ServiceResponse Handle(ServiceResponse serviceResponse, Exception serviceException)
+    public T Handle<T>(T serviceResponse, Exception serviceException) where T : IServiceResponse
     {
         serviceResponse.Success = false;
         serviceResponse.Message = "An error occurred, please contact support.";
         serviceResponse.ResponseStatus = ServiceResponseStatus.Error;
         return serviceResponse;
     }
+
+
 }

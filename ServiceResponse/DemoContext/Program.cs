@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IExceptionHandler, PublicExceptionHandler>();
+builder.Services.AddScoped<IExceptionHandler, PublicExceptionHandler>();
 
 var app = builder.Build();
 

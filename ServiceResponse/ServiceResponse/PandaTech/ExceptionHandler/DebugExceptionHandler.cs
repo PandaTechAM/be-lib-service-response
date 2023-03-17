@@ -4,7 +4,7 @@ namespace PandaTech.ServiceResponse;
 
 public class DebugExceptionHandler : IExceptionHandler
 {
-    public ServiceResponse Handle(ServiceResponse serviceResponse, Exception serviceException)
+    public T Handle<T>(T serviceResponse, Exception serviceException) where T : IServiceResponse
     {
         var builder = new StringBuilder();
 

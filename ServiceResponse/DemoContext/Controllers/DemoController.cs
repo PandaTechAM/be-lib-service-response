@@ -14,10 +14,30 @@ public class DemoController: ExtendedController
     [HttpGet]
     public ServiceResponse GetServiceResponse([FromQuery] ServiceResponseStatus responseStatus)
     {
-        var response = new ServiceResponse
+        var response = new ServiceResponse();
+        try
         {
-            ResponseStatus = responseStatus
-        };
+            response.ResponseStatus = responseStatus;
+        }
+        catch (Exception e)
+        {
+            response = ExceptionHandler.Handle(response, e);            
+        }
+        return SetResponse(response);
+    }
+    
+    [HttpGet("debug")]
+    public ServiceResponsePaged<int> GetServiceResponsePaged([FromQuery] ServiceResponseStatus responseStatus)
+    {
+        var response = new ServiceResponsePaged<int>();
+        try
+        {
+            response.ResponseStatus = responseStatus;
+        }
+        catch (Exception e)
+        {
+            response = ExceptionHandler.Handle(response, e);            
+        }
         return SetResponse(response);
     }
 }

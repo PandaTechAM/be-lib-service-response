@@ -2,5 +2,5 @@ namespace PandaTech.ServiceResponse;
 
 public interface IExceptionHandler
 {
-    ServiceResponse Handle(ServiceResponse serviceResponse, Exception serviceException);
+    T Handle<T>(T serviceResponse, Exception serviceException) where T : IServiceResponse;
 }

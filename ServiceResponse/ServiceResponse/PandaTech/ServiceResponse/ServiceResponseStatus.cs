@@ -6,7 +6,6 @@ namespace PandaTech.ServiceResponse;
 public enum ServiceResponseStatus
 {
     Ok = 200, //Get/Post/Put/Delete request succeeded.
-    OkWithNoData = 204, //Get/Post/Put/Delete request succeeded but no data returned
     Moved = 302, //Requested resource assigned to new temp/perm URL
     BadRequest = 400, //Client side error due to some reason
     Unauthorized = 401, //Client is not authenticated, unknown client
