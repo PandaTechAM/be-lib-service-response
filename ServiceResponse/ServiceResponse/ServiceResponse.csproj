@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <PackageId>PandaTech.ServiceResponse</PackageId>
     <Title>ServiceResponse</Title>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>PandaTech</Authors>
     <Company>PandaTech</Company>
     <Product>ServiceResponseTemplate</Product>

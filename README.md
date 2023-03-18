@@ -134,7 +134,7 @@ public class DemoController : ExtendedController
         }
         catch (Exception e)
         {
-            return ExceptionHandler.Handle(serviceResponse, e);
+            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
         }
 
         return SetResponse(serviceResponse);
