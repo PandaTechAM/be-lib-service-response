@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ServiceResponseTests
 {
+ 
     [Test]
     public void ServiceResponse_DefaultValues_ShouldBeSet()
     {
@@ -201,6 +202,21 @@ public class ServiceResponseTests
         }
     }
 
+    [Test]
+    public void TestPagedResponse()
+    {
+        var testController = new TestController();
+        
+        var response = testController.GetPagedResponse(new List<object>(), 1, 20, 0);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.Page, Is.EqualTo(1));
+            Assert.That(response.PageSize, Is.EqualTo(20));
+            Assert.That(response.TotalCount, Is.EqualTo(0));
+        });
+        
+    }
 
     private class TestController : ExtendedController
     {
@@ -221,6 +237,11 @@ public class ServiceResponseTests
                 ResponseStatus = status
             };
             return SetResponse(response);
+        }
+
+        public ServiceResponsePaged<List<object>> GetPagedResponse(List<object> objects, int i, int i1, int i2)
+        { 
+            return SetResponse(new ServiceResponsePaged<List<object>>(objects, i, i1, i2));
         }
     }
 }
