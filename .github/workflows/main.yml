@@ -14,12 +14,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
+        
+    - name: CD
+      run: cd ./ServiceResponse
+      
     - name: Build
       run: dotnet build
+      
     - name: Build
       run: dotnet pack --output nupkgs
       
