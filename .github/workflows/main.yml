@@ -20,9 +20,6 @@ jobs:
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
         
-    - name: CD
-      run: cd ./ServiceResponse/ServiceResponse
-      
     - name: Build
       run: dotnet build ./ServiceResponse/ServiceResponse
       
