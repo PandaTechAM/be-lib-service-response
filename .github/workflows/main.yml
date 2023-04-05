@@ -24,10 +24,10 @@ jobs:
       run: cd ./ServiceResponse/ServiceResponse
       
     - name: Build
-      run: dotnet build
+      run: dotnet build ./ServiceResponse/ServiceResponse
       
     - name: Build
-      run: dotnet pack --output nupkgs
+      run: dotnet pack ./ServiceResponse/ServiceResponse --output nupkgs
       
     - name: Publish
-      run: dotnet nuget push ./nupkgs/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push ./ServiceResponse/ServiceResponse/nupkgs/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
