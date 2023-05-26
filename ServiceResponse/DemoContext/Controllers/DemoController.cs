@@ -27,6 +27,23 @@ public class DemoController : ExtendedController
         return SetResponse(response);
     }
 
+    [HttpGet("async")]
+    public async Task<ServiceResponse> TestAsync()
+    {
+        var response = new ServiceResponse();
+        try
+        {
+            response.ResponseStatus = ServiceResponseStatus.Ok;
+        }
+        catch (Exception e)
+        {
+            response = ExceptionHandler.Handle(response, e);
+        }
+
+        return await SetResponseAsync(response);
+    }
+
+
     [HttpGet("debug")]
     public ServiceResponsePaged<int> GetServiceResponsePaged([FromQuery] ServiceResponseStatus responseStatus)
     {

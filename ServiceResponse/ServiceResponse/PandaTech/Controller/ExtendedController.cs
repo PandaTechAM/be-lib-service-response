@@ -17,4 +17,11 @@ public abstract class ExtendedController : ControllerBase
         response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
         return response;
     }
+    
+    public Task<T> SetResponseAsync<T>(T response) where T : ServiceResponse
+    {
+        Response.StatusCode = (int)response.ResponseStatus;
+        response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
+        return Task.FromResult(response);
+    }
 }

@@ -23,7 +23,7 @@ jobs:
     - name: Build
       run: dotnet build ./ServiceResponse/ServiceResponse
       
-    - name: Build
+    - name: Pack
       run: dotnet pack ./ServiceResponse/ServiceResponse --output nupkgs
       
     - name: Publish

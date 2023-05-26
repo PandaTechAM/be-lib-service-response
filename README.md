@@ -30,15 +30,6 @@ public class Blog
         public int BlogId { get; set; }
     }
 ```
-### Interface
- ```cs
-public interface IService
-{
-    public ServiceResponse DeletePost(int postId);
-    public ServiceResponse<Post> GetPost(int postId);
-    public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize);
-}
-```
 
 ### Program.cs extract
  ```cs
@@ -127,49 +118,40 @@ public class DemoController : ExtendedController
     [HttpDelete("Post")]
     public ServiceResponse DeletePost(int postId)
     {
-        var serviceResponse = new ServiceResponse();
         try
         {
-            serviceResponse = _service.DeletePost(postId);
+            return _service.DeletePost(postId);
         }
         catch (Exception e)
         {
-            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
+            return ExceptionHandler.Handle(new ServiceResponse(), e);
         }
-
-        return SetResponse(serviceResponse);
     }
 
     [HttpGet("Post")]
     public ServiceResponse<Post> GetPost(int postId)
     {
-        var serviceResponse = new ServiceResponse<Post>();
         try
         {
-            serviceResponse = _service.GetPost(postId);
+            return _service.GetPost(int postId);
         }
         catch (Exception e)
         {
-            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
+            return ExceptionHandler.Handle(new ServiceResponse<Post>(), e);
         }
-
-        return SetResponse(serviceResponse);
     }
 
     [HttpGet("Blogs")]
     public ServiceResponsePaged<List<Blog>> GetAllBlogs(int page, int pageSize)
     {
-        var serviceResponse = new ServiceResponsePaged<List<Blog>>();
         try
         {
-            serviceResponse = _service.GetAllBlogs(page, pageSize);
+            return _service.GetAllBlogs(page,pageSize);
         }
         catch (Exception e)
         {
-            serviceResponse = ExceptionHandler.Handle(serviceResponse, e);
+            return ExceptionHandler.Handle(new ServiceResponsePaged<Blog>(), e);
         }
-
-        return SetResponse(serviceResponse);
     }
 }
 ```

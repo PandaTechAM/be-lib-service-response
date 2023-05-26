@@ -6,6 +6,14 @@ public class DebugExceptionHandler : IExceptionHandler
 {
     public T Handle<T>(T serviceResponse, Exception serviceException) where T : IServiceResponse
     {
+        if (serviceException is ServiceException exception)
+        {
+            serviceResponse.Message = exception.Message;
+            serviceResponse.ResponseStatus = exception.ResponseStatus;
+            serviceResponse.Success = false;
+            return serviceResponse;
+        }
+        
         var builder = new StringBuilder();
 
         builder.AppendLine(serviceException.Message);
