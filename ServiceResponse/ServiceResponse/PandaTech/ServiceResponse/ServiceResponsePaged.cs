@@ -2,7 +2,7 @@ namespace PandaTech.ServiceResponse;
 
 public class ServiceResponsePaged<T> : ServiceResponse<T>
 {
-    public ResponseDataPaged<T>? ResponseData { get; set; }
+    public ResponseDataPaged<T> ResponseData { get; set; }
 
     public ServiceResponsePaged(ResponseDataPaged<T> data) : base(data)
     {

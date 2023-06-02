@@ -12,7 +12,7 @@ public class ServiceResponseTests
         // Arrange
         var serviceResponse = new ServiceResponse();
         var serviceResponseTyped = new ServiceResponse<object>();
-        var serviceResponsePaged = new ServiceResponsePaged<object>(null);
+        var serviceResponsePaged = new ServiceResponsePaged<object>(new ResponseDataPaged<object>());
 
 
         // Act
@@ -25,7 +25,7 @@ public class ServiceResponseTests
                 Assert.That(serviceResponsePaged.Success, Is.True);
                 Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
                 Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-                Assert.That(serviceResponsePaged.ResponseData, Is.Null);
+                Assert.That(serviceResponsePaged.ResponseData.Data, Is.Null);
             }
         );
 
@@ -42,21 +42,8 @@ public class ServiceResponseTests
             Assert.That(serviceResponseTyped.Success, Is.True);
             Assert.That(serviceResponseTyped.Message, Is.EqualTo(string.Empty));
             Assert.That(serviceResponseTyped.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-            Assert.That(serviceResponseTyped.ResponseData, Is.Null);
+            Assert.That(serviceResponseTyped.ResponseData.Data, Is.Null);
         });
-
-
-        serviceResponsePaged = new ServiceResponsePaged<object>();
-
-        Assert.Multiple(
-            () =>
-            {
-                Assert.That(serviceResponsePaged.Success, Is.True);
-                Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
-                Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-                Assert.That(serviceResponsePaged.ResponseData, Is.Null);
-            }
-        );
     }
 
     [Test]
