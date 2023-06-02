@@ -17,14 +17,19 @@ public interface IServiceResponse
 
 public class ServiceResponse<T> : ServiceResponse
 {
-    public T? Data { get; set; }
+    public ResponseData<T>? ResponseData { get; set; }
 
-    public ServiceResponse(T data)
+    public ServiceResponse(ResponseData<T> data)
     {
-        Data = data;
+        ResponseData = data;
     }
 
     public ServiceResponse()
     {
     }
+}
+
+public class ResponseData<T>
+{
+    public T? Data { get; set; }
 }
