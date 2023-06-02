@@ -25,7 +25,7 @@ public class ServiceResponseTests
                 Assert.That(serviceResponsePaged.Success, Is.True);
                 Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
                 Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-                Assert.That(serviceResponsePaged.ResponseData.Data, Is.Null);
+                Assert.That(serviceResponsePaged.ResponseData.Data, Is.Empty);
             }
         );
 
@@ -220,11 +220,11 @@ public class ServiceResponseTests
             return SetResponse(response);
         }
 
-        public ServiceResponsePaged<List<object>> GetPagedResponse(List<object> objects, int i, int i1, int i2)
+        public ServiceResponsePaged<object> GetPagedResponse(List<object> objects, int i, int i1, int i2)
         {
-            return SetResponse(new ServiceResponsePaged<List<object>>
+            return SetResponse(new ServiceResponsePaged<object>
             {
-                ResponseData = new ResponseDataPaged<List<object>>
+                ResponseData = new ResponseDataPaged<object>
                 {
                     Data = objects,
                     Page = i,
