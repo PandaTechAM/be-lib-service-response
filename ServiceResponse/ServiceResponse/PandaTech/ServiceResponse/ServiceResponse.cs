@@ -10,7 +10,7 @@ public class ServiceResponse
 
 public class ServiceResponse<T> : ServiceResponse
 {
-    public ResponseData<T>? ResponseData { get; set; }
+    public ResponseData<T> ResponseData { get; set; } = new ResponseData<T>();
 
     public ServiceResponse(ResponseData<T> data)
     {
