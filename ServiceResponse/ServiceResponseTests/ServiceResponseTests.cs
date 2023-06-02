@@ -1,4 +1,3 @@
-using System.Security.Permissions;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
@@ -6,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 public class ServiceResponseTests
 {
- 
+
     [Test]
     public void ServiceResponse_DefaultValues_ShouldBeSet()
     {
         // Arrange
         var serviceResponse = new ServiceResponse();
         var serviceResponseTyped = new ServiceResponse<object>();
-        var serviceResponsePaged = new ServiceResponsePaged<object>(null, 1, 20, 0);
+        var serviceResponsePaged = new ServiceResponsePaged<object>(null);
 
 
         // Act
@@ -26,10 +25,7 @@ public class ServiceResponseTests
                 Assert.That(serviceResponsePaged.Success, Is.True);
                 Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
                 Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-                Assert.That(serviceResponsePaged.Data, Is.Null);
-                Assert.That(serviceResponsePaged.Page, Is.EqualTo(1));
-                Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(20));
-                Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(0));
+                Assert.That(serviceResponsePaged.ResponseData, Is.Null);
             }
         );
 
@@ -46,7 +42,7 @@ public class ServiceResponseTests
             Assert.That(serviceResponseTyped.Success, Is.True);
             Assert.That(serviceResponseTyped.Message, Is.EqualTo(string.Empty));
             Assert.That(serviceResponseTyped.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-            Assert.That(serviceResponseTyped.Data, Is.Null);
+            Assert.That(serviceResponseTyped.ResponseData, Is.Null);
         });
 
 
@@ -58,10 +54,7 @@ public class ServiceResponseTests
                 Assert.That(serviceResponsePaged.Success, Is.True);
                 Assert.That(serviceResponsePaged.Message, Is.EqualTo(string.Empty));
                 Assert.That(serviceResponsePaged.ResponseStatus, Is.EqualTo(ServiceResponseStatus.Ok));
-                Assert.That(serviceResponsePaged.Data, Is.Null);
-                Assert.That(serviceResponsePaged.Page, Is.EqualTo(1));
-                Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(20));
-                Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(0));
+                Assert.That(serviceResponsePaged.ResponseData, Is.Null);
             }
         );
     }
@@ -91,16 +84,13 @@ public class ServiceResponseTests
     public void ServiceResponsePaged_DefaultValues_ShouldBeSet()
     {
         // Arrange
-        var serviceResponsePaged = new ServiceResponsePaged<object>(null, 1, 20, 0);
+        var serviceResponsePaged = new ServiceResponsePaged<object>(null);
         // Act
 
         // Assert
         Assert.Multiple(() =>
         {
-            Assert.That(serviceResponsePaged.Data, Is.Null);
-            Assert.That(serviceResponsePaged.Page, Is.EqualTo(1));
-            Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(20));
-            Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(0));
+            Assert.That(serviceResponsePaged.ResponseData, Is.Null);
         });
     }
 
@@ -108,17 +98,21 @@ public class ServiceResponseTests
     public void ServiceResponsePaged_SetValues_ShouldBeSet()
     {
         // Arrange
-        var data = new object();
-        var serviceResponsePaged = new ServiceResponsePaged<object>(data, 2, 50, 100);
+        var data = new ResponseDataPaged<object>
+        {
+            Data = new List<object>(),
+            Page = 1,
+            PageSize = 20,
+            TotalCount = 0
+        };
+
+        var serviceResponsePaged = new ServiceResponsePaged<object>(data);
         // Act
 
         // Assert
         Assert.Multiple(() =>
         {
-            Assert.That(serviceResponsePaged.Data, Is.EqualTo(data));
-            Assert.That(serviceResponsePaged.Page, Is.EqualTo(2));
-            Assert.That(serviceResponsePaged.PageSize, Is.EqualTo(50));
-            Assert.That(serviceResponsePaged.TotalCount, Is.EqualTo(100));
+            Assert.That(serviceResponsePaged.ResponseData, Is.EqualTo(data));
         });
     }
 
@@ -206,16 +200,16 @@ public class ServiceResponseTests
     public void TestPagedResponse()
     {
         var testController = new TestController();
-        
+
         var response = testController.GetPagedResponse(new List<object>(), 1, 20, 0);
-        
+
         Assert.Multiple(() =>
         {
-            Assert.That(response.Page, Is.EqualTo(1));
-            Assert.That(response.PageSize, Is.EqualTo(20));
-            Assert.That(response.TotalCount, Is.EqualTo(0));
+            Assert.That(response.ResponseData.Page, Is.EqualTo(1));
+            Assert.That(response.ResponseData.PageSize, Is.EqualTo(20));
+            Assert.That(response.ResponseData.TotalCount, Is.EqualTo(0));
         });
-        
+
     }
 
     private class TestController : ExtendedController
@@ -240,8 +234,17 @@ public class ServiceResponseTests
         }
 
         public ServiceResponsePaged<List<object>> GetPagedResponse(List<object> objects, int i, int i1, int i2)
-        { 
-            return SetResponse(new ServiceResponsePaged<List<object>>(objects, i, i1, i2));
+        {
+            return SetResponse(new ServiceResponsePaged<List<object>>
+            {
+                ResponseData = new ResponseDataPaged<List<object>>
+                {
+                    Data = objects,
+                    Page = i,
+                    PageSize = i1,
+                    TotalCount = i2
+                }
+            });
         }
     }
 }
