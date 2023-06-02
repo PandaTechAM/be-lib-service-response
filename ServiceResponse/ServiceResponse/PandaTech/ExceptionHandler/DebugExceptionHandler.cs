@@ -4,7 +4,7 @@ namespace PandaTech.ServiceResponse;
 
 public class DebugExceptionHandler : IExceptionHandler
 {
-    public T Handle<T>(T serviceResponse, Exception serviceException) where T : IServiceResponse
+    public T Handle<T>(T serviceResponse, Exception serviceException) where T : ServiceResponse
     {
         if (serviceException is ServiceException exception)
         {
