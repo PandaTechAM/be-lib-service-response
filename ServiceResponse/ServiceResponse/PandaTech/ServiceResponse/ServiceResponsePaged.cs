@@ -4,6 +4,11 @@ public class ServiceResponsePaged<T> : ServiceResponse
 {
     public ResponseDataPaged<T> ResponseData { get; set; } = new();
 
+    public ServiceResponsePaged(List<T> data, int page, int pageSize, int totalCount) : base()
+    {
+        ResponseData = new ResponseDataPaged<T>(data, page, pageSize, totalCount);
+    }
+    
     public ServiceResponsePaged(ResponseDataPaged<T> data) : base()
     {
         ResponseData = data;

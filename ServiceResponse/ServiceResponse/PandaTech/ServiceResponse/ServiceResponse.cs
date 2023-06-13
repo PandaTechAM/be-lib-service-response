@@ -16,6 +16,11 @@ public class ServiceResponse<T> : ServiceResponse
     {
         ResponseData = data;
     }
+    
+    public ServiceResponse(T data)
+    {
+        ResponseData = new ResponseData<T>(data);
+    }
 
     public ServiceResponse()
     {

@@ -24,4 +24,42 @@ public abstract class ExtendedController : ControllerBase
         response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
         return Task.FromResult(response);
     }
+    
+    public static ServiceResponse FromException(ServiceException e)
+    {
+        var response = new ServiceResponse
+        {
+            ResponseStatus = e.ResponseStatus,
+            Message = e.Message,
+            Success = false
+        };
+
+        return response;
+
+    }
+    public static ServiceResponse<T> FromException<T>(ServiceException e)
+    {
+        var response = new ServiceResponse<T>
+        {
+            ResponseStatus = e.ResponseStatus,
+            Message = e.Message,
+            Success = false
+        };
+
+        return response;
+
+    }
+    public static ServiceResponsePaged<T> FromExceptionPaged<T>(ServiceException e)
+    {
+        var response = new ServiceResponsePaged<T>
+        {
+            ResponseStatus = e.ResponseStatus,
+            Message = e.Message,
+            Success = false
+        };
+
+        return response;
+
+    }
+    
 }
