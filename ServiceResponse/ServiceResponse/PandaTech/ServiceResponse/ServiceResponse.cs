@@ -24,6 +24,7 @@ public class ServiceResponse<T> : ServiceResponse
 
     public ServiceResponse()
     {
+        ResponseData = new ResponseData<T>();
     }
 }
 
@@ -38,5 +39,6 @@ public class ResponseData<T>
     
     public ResponseData()
     {
+        Data = default;
     }
 }

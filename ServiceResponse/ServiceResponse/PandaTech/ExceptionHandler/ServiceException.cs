@@ -7,6 +7,5 @@ public class ServiceException: Exception
     {
         ResponseStatus = responseStatus;
     }
-    
 }
 
