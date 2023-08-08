@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PandaTech.JsonException;
 
 namespace PandaTech.ServiceResponse;
@@ -6,11 +7,14 @@ namespace PandaTech.ServiceResponse;
 [PandaJsonException]
 public abstract class ExtendedController : ControllerBase
 {
+    ILogger<ExtendedController> Logger { get; set; }
+    
     public IExceptionHandler ExceptionHandler { get; set; }
 
-    protected ExtendedController(IExceptionHandler exceptionHandler)
+    protected ExtendedController(IExceptionHandler exceptionHandler, ILogger<ExtendedController> logger)
     {
         ExceptionHandler = exceptionHandler;
+        Logger = logger;
     }
 
     public T SetResponse<T>(T response) where T : ServiceResponse
@@ -38,17 +42,18 @@ public abstract class ExtendedController : ControllerBase
         {
             if (e is ServiceException serviceException)
             {
+                Logger?.LogWarning("{Message}", serviceException.Message);
                 response = FromException(serviceException);
             }
             else
             {
+                Logger?.LogError("{Message}", e);
                 response = ExceptionHandler.Handle(new ServiceResponse(), e);
             }
         }
 
         return SetResponse(response);
     }
-
     protected ServiceResponse<T> HandleCall<T>(Func<T> func)
     {
         ServiceResponse<T>  response;
@@ -60,10 +65,12 @@ public abstract class ExtendedController : ControllerBase
         {
             if (e is ServiceException serviceException)
             {
+                Logger?.LogWarning("{Message}", serviceException.Message);
                 response = FromException<T>(serviceException);
             }
             else
             {
+                Logger?.LogError("{Message}", e);
                 response = ExceptionHandler.Handle(new ServiceResponse<T>(), e);
             }
         }
@@ -82,10 +89,12 @@ public abstract class ExtendedController : ControllerBase
         {
             if (e is ServiceException serviceException)
             {
+                Logger?.LogWarning("{Message}", serviceException.Message);
                 response = FromExceptionPaged<T>(serviceException);
             }
             else
             {
+                Logger?.LogError("{Message}", e);
                 response = ExceptionHandler.Handle(new ServiceResponsePaged<T>(), e);
             }
         }

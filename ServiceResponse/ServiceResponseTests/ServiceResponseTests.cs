@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 
 public class ServiceResponseTests
 {
@@ -203,7 +204,7 @@ public class ServiceResponseTests
     {
         public new HttpResponse Response { get; set; } = new DefaultHttpResponse(new DefaultHttpContext());
 
-        public TestController() : base(new PublicExceptionHandler())
+        public TestController() : base(new PublicExceptionHandler(), NullLogger<ExtendedController>.Instance)
         {
             ControllerContext = new ControllerContext
             {

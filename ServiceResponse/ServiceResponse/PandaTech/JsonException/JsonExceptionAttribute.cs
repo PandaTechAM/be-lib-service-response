@@ -8,8 +8,7 @@ public class PandaJsonExceptionAttribute : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        Console.WriteLine(321);
-        if (((ExtendedController)context.Controller).ModelState.IsValid)
+        /*if (!((ExtendedController)context.Controller).ModelState.IsValid)
         {
             // Handle the validation errors and create a custom response object if needed.
             // For example, create a custom dictionary of error messages or modify the structure.
@@ -19,6 +18,6 @@ public class PandaJsonExceptionAttribute : ActionFilterAttribute
 
             context.Result = new BadRequestObjectResult(new ServiceResponse.ServiceResponse()
                 { ResponseStatus = ServiceResponseStatus.BadRequest });
-        }
+        }*/
     }
 }
