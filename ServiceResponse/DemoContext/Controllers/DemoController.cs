@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PandaTech.JsonException;
 using PandaTech.ServiceResponse;
 
 namespace DemoContext.Controllers;
@@ -46,7 +47,9 @@ public class DemoController : ExtendedController
 
     [HttpGet("debug")]
     public ServiceResponsePaged<int> GetServiceResponsePaged([FromQuery] ServiceResponseStatus responseStatus)
-    {
+    => HandleCall(() => new ServiceResponsePaged<int> {ResponseStatus = responseStatus});
+    
+    /*{
         var response = new ServiceResponsePaged<int>();
         try
         {
@@ -58,5 +61,18 @@ public class DemoController : ExtendedController
         }
 
         return SetResponse(response);
-    }
+    }*/
+    
+    [HttpPost("debug2")]
+
+    public Task<ServiceResponse<SomeDTO>> GetSomeDto([FromBody] SomeDTO dto)
+        => Task.FromResult<ServiceResponse<SomeDTO>>(new(dto));
+
+
+}
+
+public class SomeDTO
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
 }

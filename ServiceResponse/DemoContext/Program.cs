@@ -1,3 +1,4 @@
+using PandaTech.JsonException;
 using PandaTech.ServiceResponse;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IExceptionHandler, PublicExceptionHandler>();
+
 
 var app = builder.Build();
 
