@@ -31,7 +31,7 @@ public abstract class ExtendedController : ControllerBase
         return Task.FromResult(response);
     }
 
-    public ServiceResponse HandleCall(Action action)
+    protected ServiceResponse HandleCall(Action action)
     {
         var response = new ServiceResponse();
         try
@@ -54,7 +54,8 @@ public abstract class ExtendedController : ControllerBase
 
         return SetResponse(response);
     }
-    public ServiceResponse<T> HandleCall<T>(Func<T> func)
+
+    protected ServiceResponse<T> HandleCall<T>(Func<T> func)
     {
         ServiceResponse<T>  response;
         try
@@ -78,7 +79,7 @@ public abstract class ExtendedController : ControllerBase
         return SetResponse(response);
     }
 
-    public ServiceResponsePaged<T> HandleCall<T>(Func<ServiceResponsePaged<T>> func)
+    protected ServiceResponsePaged<T> HandleCall<T>(Func<ServiceResponsePaged<T>> func)
     {
         ServiceResponsePaged<T>  response;
         try
