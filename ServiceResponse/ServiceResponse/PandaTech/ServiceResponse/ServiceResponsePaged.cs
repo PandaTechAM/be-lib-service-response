@@ -24,9 +24,9 @@ public class ResponseDataPaged<T>
     public List<T> Data { get; set; } = new();
     public int Page { get; set; } = 1;
     public int PageSize { get; set; } = 20;
-    public int TotalCount { get; set; } = 0;
+    public long TotalCount { get; set; } = 0;
     
-    public ResponseDataPaged(List<T> data, int page, int pageSize, int totalCount)
+    public ResponseDataPaged(List<T> data, int page, int pageSize, long totalCount)
     {
         Data = data;
         Page = page;
