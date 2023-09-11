@@ -1,16 +1,23 @@
-using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Mvc;
-using PandaTech.JsonException;
 using PandaTech.ServiceResponse;
 
 namespace DemoContext.Controllers;
 
-[ApiController]
+[Controller]
 [Route("[controller]")]
+[ServiceValidationFilter]
+[ServiceExceptionFilter]
 public class DemoController : ExtendedController
 {
-    public DemoController(IExceptionHandler exceptionHandler, ILogger<DemoController> logger) : base(exceptionHandler, logger)
+    public DemoController(IExceptionHandler exceptionHandler, ILogger<DemoController> logger) : base(exceptionHandler,
+        logger)
     {
+    }
+
+    [HttpPost]
+    public ServiceResponse PostServiceResponse([FromBody] SomeDTO dto)
+    {
+        return new();
     }
 
     [HttpGet]
@@ -48,24 +55,22 @@ public class DemoController : ExtendedController
 
     [HttpGet("debug")]
     public ServiceResponsePaged<int> GetServiceResponsePaged([FromQuery] ServiceResponseStatus responseStatus)
-    => HandleCall(() => new ServiceResponsePaged<int> {ResponseStatus = responseStatus});
-  
-    
-    [HttpPost("debug2")]
+        => new() { ResponseStatus = responseStatus };
 
+
+    [HttpPost("debug2")]
     public Task<ServiceResponse<SomeDTO>> GetSomeDto([FromBody] SomeDTO dto)
         => Task.FromResult<ServiceResponse<SomeDTO>>(new(dto));
 
     [HttpGet("debug3")]
     public ServiceResponse ThrowServiceException()
-        => HandleCall(() => throw new ServiceException("Test exception", ServiceResponseStatus.Moved));
-    
-    
+        => throw new ServiceException("Test exception", ServiceResponseStatus.Moved);
+
+
     [HttpGet("debug5")]
     public ServiceResponse ThrowException()
-        => HandleCall(() => throw new Exception("Test exception"));
+        => throw new Exception("Test exception");
 }
-
 
 public class SomeDTO
 {

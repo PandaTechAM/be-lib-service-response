@@ -17,7 +17,7 @@ public abstract class ExtendedController : ControllerBase
         Logger = logger;
     }
 
-    public T SetResponse<T>(T response) where T : ServiceResponse
+    public  T SetResponse<T>(T response) where T : ServiceResponse
     {
         Response.StatusCode = (int)response.ResponseStatus;
         response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
@@ -31,29 +31,7 @@ public abstract class ExtendedController : ControllerBase
         return Task.FromResult(response);
     }
 
-    protected ServiceResponse HandleCall(Action action)
-    {
-        var response = new ServiceResponse();
-        try
-        {
-            action();
-        }
-        catch (Exception e)
-        {
-            if (e is ServiceException serviceException)
-            {
-                Logger?.LogWarning("{Message}", serviceException.Message);
-                response = FromException(serviceException);
-            }
-            else
-            {
-                Logger?.LogError("{Message}", e);
-                response = ExceptionHandler.Handle(new ServiceResponse(), e);
-            }
-        }
 
-        return SetResponse(response);
-    }
 
     protected async Task<ServiceResponse> ServiceResponsePaged(Func<Task> func)
     {
@@ -78,100 +56,7 @@ public abstract class ExtendedController : ControllerBase
 
         return await SetResponseAsync(response);
     }
-    protected ServiceResponse<T> HandleCall<T>(Func<T> func)
-    {
-        ServiceResponse<T>  response;
-        try
-        {
-            response = new ServiceResponse<T>(func()) ;
-        }
-        catch (Exception e)
-        {
-            if (e is ServiceException serviceException)
-            {
-                Logger?.LogWarning("{Message}", serviceException.Message);
-                response = FromException<T>(serviceException);
-            }
-            else
-            {
-                Logger?.LogError("{Message}", e);
-                response = ExceptionHandler.Handle(new ServiceResponse<T>(), e);
-            }
-        }
 
-        return SetResponse(response);
-    }
-
-    protected async Task<ServiceResponse<T>> HandleCallAsync<T>(Func<T> func)
-    {
-        ServiceResponse<T>  response;
-        try
-        {
-            response = new ServiceResponse<T>( func()) ;
-        }
-        catch (Exception e)
-        {
-            if (e is ServiceException serviceException)
-            {
-                Logger.LogWarning("{Message}", serviceException.Message);
-                response = FromException<T>(serviceException);
-            }
-            else
-            {
-                Logger.LogError("{Message}", e);
-                response = ExceptionHandler.Handle(new ServiceResponse<T>(), e);
-            }
-        }
-
-        return await SetResponseAsync(response);
-    }
-    protected ServiceResponsePaged<T> HandleCall<T>(Func<ServiceResponsePaged<T>> func)
-    {
-        ServiceResponsePaged<T>  response;
-        try
-        {
-            response = func();
-        }
-        catch (Exception e)
-        {
-            if (e is ServiceException serviceException)
-            {
-                Logger?.LogWarning("{Message}", serviceException.Message);
-                response = FromExceptionPaged<T>(serviceException);
-            }
-            else
-            {
-                Logger?.LogError("{Message}", e);
-                response = ExceptionHandler.Handle(new ServiceResponsePaged<T>(), e);
-            }
-        }
-
-        return SetResponse(response);
-    }
-
-    protected async Task<ServiceResponsePaged<T>> HandleCallAsync<T>(Func<ServiceResponsePaged<T>> func)
-    {
-        ServiceResponsePaged<T>  response;
-        try
-        {
-            response  = func();
-        }
-        catch (Exception e)
-        {
-            if (e is ServiceException serviceException)
-            {
-                Logger.LogWarning("{Message}", serviceException.Message);
-                response = FromExceptionPaged<T>(serviceException);
-            }
-            else
-            {
-                Logger.LogError("{Message}", e);
-                response = ExceptionHandler.Handle(new ServiceResponsePaged<T>(), e);
-            }
-        }
-
-        return await SetResponseAsync(response);
-    }
     public static ServiceResponse FromException(ServiceException e)
     {
         var response = new ServiceResponse
