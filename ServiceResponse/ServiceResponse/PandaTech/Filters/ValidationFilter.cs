@@ -26,7 +26,7 @@ public class ServiceValidationFilterAttribute : ActionFilterAttribute
         {
             foreach (var subError in error.Value)
             {
-                errors.Append($"{error.Key}: {subError}" );
+                errors.Append($"{error.Key}: {subError} \n" );
             }
         }
         errorResponse.Message = errors.ToString();            
