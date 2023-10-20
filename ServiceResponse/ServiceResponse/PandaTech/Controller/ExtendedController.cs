@@ -17,7 +17,7 @@ public abstract class ExtendedController : ControllerBase
         Logger = logger;
     }
 
-    public  T SetResponse<T>(T response) where T : ServiceResponse
+    public T SetResponse<T>(T response) where T : ServiceResponse
     {
         Response.StatusCode = (int)response.ResponseStatus;
         response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
@@ -31,7 +31,29 @@ public abstract class ExtendedController : ControllerBase
         return Task.FromResult(response);
     }
 
+    protected ServiceResponse HandleCall(Action action)
+    {
+        var response = new ServiceResponse();
+        try
+        {
+            action();
+        }
+        catch (Exception e)
+        {
+            if (e is ServiceException serviceException)
+            {
+                Logger?.LogWarning("{Message}", serviceException.Message);
+                response = FromException(serviceException);
+            }
+            else
+            {
+                Logger?.LogError("{Message}", e);
+                response = ExceptionHandler.Handle(new ServiceResponse(), e);
+            }
+        }
 
+        return SetResponse(response);
+    }
 
     protected async Task<ServiceResponse> ServiceResponsePaged(Func<Task> func)
     {
