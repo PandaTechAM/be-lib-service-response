@@ -11,5 +11,6 @@ public enum ServiceResponseStatus
     Unauthorized = 401, //Client is not authenticated, unknown client
     Forbidden = 403, //Client is known but access is restricted
     NotFound = 404, //Endpoint is valid but the resource itself does not exist.
-    Error = 500 //Other error
+    Error = 500, //Other error
+    Conflict = 409 //Other error
 }
