@@ -1,19 +1,22 @@
 # ServiceResponse
 
 ## Intro
- This is service response template for .Net 6+ web api projects. This template is based on the best practices and
- has goal to harmonize all API I/O operations. The benefit of this template over other templates is that it totally
- integrates with OpenAPI and Swagger. So, IActionResults and other services,
- response will be visible in Swagger UI and loads of other features are and is going to be included.
-  
- This Template is designed by PandaTech LLC.
- We build software with the greatest quality!
- Our website: www.pandatech.it :)
+
+This is service response template for .Net 6+ web api projects. This template is based on the best practices and
+has goal to harmonize all API I/O operations. The benefit of this template over other templates is that it totally
+integrates with OpenAPI and Swagger. So, IActionResults and other services,
+response will be visible in Swagger UI and loads of other features are and is going to be included.
+
+This Template is designed by PandaTech LLC.
+We build software with the greatest quality!
+Our website: www.pandatech.it :)
 
  ---
 
- ## Example
- ### Model
+## Example
+
+### Model
+
  ```cs
 public class Blog
     {
@@ -32,6 +35,7 @@ public class Blog
 ```
 
 ### Program.cs extract
+
  ```cs
 builder.Services.AddTransient<IService, Services>();
 
@@ -42,7 +46,8 @@ builder.Services.AddTransient<IService, Services>();
 #endif
 ```
 
- ### Service
+### Service
+
  ```cs
 public class Services : IService
 {
@@ -102,7 +107,9 @@ public class Services : IService
     }
 }
 ```
- ### Controller
+
+### Controller
+
  ```cs
 [ApiController]
 [Route("[controller]")]
