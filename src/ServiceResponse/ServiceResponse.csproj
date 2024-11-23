@@ -2,13 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
+        <RootNamespace>ServiceResponseCrafter</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageIcon>pandatech.png</PackageIcon>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>Pandatech</Authors>
         <Copyright>MIT</Copyright>
-        <Version>2.0.1</Version>
+        <Version>2.0.2</Version>
         <PackageId>PandaTech.ServiceResponse</PackageId>
         <Title>ServiceResponse</Title>
         <PackageTags>API; RESTt; ServiceResponse; Service Response; HTTP status codes; API response; REST Response</PackageTags>

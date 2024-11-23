@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ServiceResponse.Controller;
-using ServiceResponse.ExceptionHandler;
+using ServiceResponseCrafter.Controller;
+using ServiceResponseCrafter.ExceptionHandler;
 
-namespace ServiceResponse.Filters;
+namespace ServiceResponseCrafter.Filters;
 
 public class ServiceExceptionFilterAttribute : ExceptionFilterAttribute
 {

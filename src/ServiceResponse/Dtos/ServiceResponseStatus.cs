@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ServiceResponse.Dtos;
+namespace ServiceResponseCrafter.Dtos;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ServiceResponseStatus

@@ -1,6 +1,6 @@
-using ServiceResponse.Dtos;
+using ServiceResponseCrafter.Dtos;
 
-namespace ServiceResponse.ExceptionHandler;
+namespace ServiceResponseCrafter.ExceptionHandler;
 
 public class PublicExceptionHandler : IExceptionHandler
 {

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ServiceResponse.Dtos;
-using ServiceResponse.ExceptionHandler;
-using ServiceResponse.JsonException;
+using ServiceResponseCrafter.Dtos;
+using ServiceResponseCrafter.ExceptionHandler;
+using ServiceResponseCrafter.JsonException;
 
-namespace ServiceResponse.Controller;
+namespace ServiceResponseCrafter.Controller;
 
 [PandaJsonException]
 public abstract class ExtendedController : ControllerBase

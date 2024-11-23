@@ -1,7 +1,7 @@
 using System.Text;
-using ServiceResponse.Dtos;
+using ServiceResponseCrafter.Dtos;
 
-namespace ServiceResponse.ExceptionHandler;
+namespace ServiceResponseCrafter.ExceptionHandler;
 
 public class DebugExceptionHandler : IExceptionHandler
 {
