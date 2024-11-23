@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ServiceResponse.Dtos;
 using ServiceResponse.ExceptionHandler;
 using ServiceResponse.JsonException;
-using ServiceResponse.ServiceResponse;
 
 namespace ServiceResponse.Controller;
 
@@ -19,23 +19,23 @@ public abstract class ExtendedController : ControllerBase
 
    public IExceptionHandler ExceptionHandler { get; set; }
 
-   public T SetResponse<T>(T response) where T : ServiceResponse.ServiceResponse
+   public T SetResponse<T>(T response) where T : Dtos.ServiceResponse
    {
       Response.StatusCode = (int)response.ResponseStatus;
       response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
       return response;
    }
 
-   public Task<T> SetResponseAsync<T>(T response) where T : ServiceResponse.ServiceResponse
+   public Task<T> SetResponseAsync<T>(T response) where T : Dtos.ServiceResponse
    {
       Response.StatusCode = (int)response.ResponseStatus;
       response.Success = response.ResponseStatus == ServiceResponseStatus.Ok;
       return Task.FromResult(response);
    }
 
-   protected ServiceResponse.ServiceResponse HandleCall(Action action)
+   protected Dtos.ServiceResponse HandleCall(Action action)
    {
-      var response = new ServiceResponse.ServiceResponse();
+      var response = new Dtos.ServiceResponse();
       try
       {
          action();
@@ -50,16 +50,16 @@ public abstract class ExtendedController : ControllerBase
          else
          {
             Logger?.LogError("{Message}", e);
-            response = ExceptionHandler.Handle(new ServiceResponse.ServiceResponse(), e);
+            response = ExceptionHandler.Handle(new Dtos.ServiceResponse(), e);
          }
       }
 
       return SetResponse(response);
    }
 
-   protected async Task<ServiceResponse.ServiceResponse> ServiceResponsePaged(Func<Task> func)
+   protected async Task<Dtos.ServiceResponse> ServiceResponsePaged(Func<Task> func)
    {
-      var response = new ServiceResponse.ServiceResponse();
+      var response = new Dtos.ServiceResponse();
       try
       {
          await func();
@@ -74,16 +74,16 @@ public abstract class ExtendedController : ControllerBase
          else
          {
             Logger.LogError("{Message}", e);
-            response = ExceptionHandler.Handle(new ServiceResponse.ServiceResponse(), e);
+            response = ExceptionHandler.Handle(new Dtos.ServiceResponse(), e);
          }
       }
 
       return await SetResponseAsync(response);
    }
 
-   public static ServiceResponse.ServiceResponse FromException(ServiceException e)
+   public static Dtos.ServiceResponse FromException(ServiceException e)
    {
-      var response = new ServiceResponse.ServiceResponse
+      var response = new Dtos.ServiceResponse
       {
          ResponseStatus = e.ResponseStatus,
          Message = e.Message,

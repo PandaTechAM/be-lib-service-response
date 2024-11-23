@@ -15,7 +15,7 @@ public class ServiceExceptionFilterAttribute : ExceptionFilterAttribute
          context.HttpContext.RequestServices.GetRequiredService<IExceptionHandler>();
       var logger = context.HttpContext.RequestServices.GetRequiredService<ILogger<ServiceExceptionFilterAttribute>>();
       var exception = context.Exception;
-      ServiceResponse.ServiceResponse serviceResponse;
+      Dtos.ServiceResponse serviceResponse;
 
       if (exception is ServiceException serviceException)
       {
@@ -29,7 +29,7 @@ public class ServiceExceptionFilterAttribute : ExceptionFilterAttribute
       else
       {
          logger.LogError("{Message}", exception);
-         serviceResponse = exceptionHandler.Handle(new ServiceResponse.ServiceResponse(), exception);
+         serviceResponse = exceptionHandler.Handle(new Dtos.ServiceResponse(), exception);
 
          context.Result = new ObjectResult(serviceResponse)
          {

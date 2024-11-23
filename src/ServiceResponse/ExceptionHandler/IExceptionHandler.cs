@@ -2,5 +2,5 @@ namespace ServiceResponse.ExceptionHandler;
 
 public interface IExceptionHandler
 {
-   T Handle<T>(T serviceResponse, Exception serviceException) where T : ServiceResponse.ServiceResponse;
+   T Handle<T>(T serviceResponse, Exception serviceException) where T : Dtos.ServiceResponse;
 }

@@ -1,4 +1,4 @@
-using ServiceResponse.ServiceResponse;
+using ServiceResponse.Dtos;
 
 namespace ServiceResponse.ExceptionHandler;
 
