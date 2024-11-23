@@ -1,11 +1,11 @@
 using System.Text;
-using ServiceResponse.ServiceResponse;
+using ServiceResponse.Dtos;
 
 namespace ServiceResponse.ExceptionHandler;
 
 public class DebugExceptionHandler : IExceptionHandler
 {
-   public T Handle<T>(T serviceResponse, Exception serviceException) where T : ServiceResponse.ServiceResponse
+   public T Handle<T>(T serviceResponse, Exception serviceException) where T : Dtos.ServiceResponse
    {
       if (serviceException is ServiceException exception)
       {

@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ServiceResponse.ServiceResponse;
+using ServiceResponse.Dtos;
 
 namespace ServiceResponse.Filters;
 
@@ -21,7 +21,7 @@ public class ServiceValidationFilterAttribute : ActionFilterAttribute
                                          kvp => kvp.Value!.Errors.Select(x => x.ErrorMessage))
                                       .ToArray();
 
-      var errorResponse = new ServiceResponse.ServiceResponse
+      var errorResponse = new Dtos.ServiceResponse
       {
          ResponseStatus = ServiceResponseStatus.BadRequest
       };

@@ -1,4 +1,4 @@
-namespace ServiceResponse.ServiceResponse;
+namespace ServiceResponse.Dtos;
 
 public class ServiceResponsePaged<T> : ServiceResponse
 {
