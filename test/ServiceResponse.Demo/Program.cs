@@ -1,4 +1,4 @@
-using ServiceResponse.ExceptionHandler;
+using ServiceResponseCrafter.ExceptionHandler;
 
 var builder = WebApplication.CreateBuilder(args);
 

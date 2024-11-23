@@ -1,4 +1,4 @@
-namespace ServiceResponse.ExceptionHandler;
+namespace ServiceResponseCrafter.ExceptionHandler;
 
 public interface IExceptionHandler
 {

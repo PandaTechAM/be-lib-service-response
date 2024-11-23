@@ -1,9 +1,9 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ServiceResponse.Dtos;
+using ServiceResponseCrafter.Dtos;
 
-namespace ServiceResponse.Filters;
+namespace ServiceResponseCrafter.Filters;
 
 public class ServiceValidationFilterAttribute : ActionFilterAttribute
 {

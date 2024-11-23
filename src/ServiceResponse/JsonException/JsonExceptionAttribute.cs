@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace ServiceResponse.JsonException;
+namespace ServiceResponseCrafter.JsonException;
 
 public class PandaJsonExceptionAttribute : ActionFilterAttribute
 {
